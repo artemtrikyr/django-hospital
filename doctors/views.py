@@ -13,7 +13,11 @@ def doctor_create(request):
         form = DoctorForm(request.POST)
         if form.is_valid():
             form.save()
+<<<<<<< HEAD
             return redirect('doctor_list')
+=======
+            return redirect('doctor_list') # переконайся, що такий name є в urls.py
+>>>>>>> 15ebb4350ac37d906d0ce3ad45cd333009cce21a
     else:
         form = DoctorForm()
     return render(request, 'doctors/form.html', {'form': form, 'title': 'Додати лікаря'})
