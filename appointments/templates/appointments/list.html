@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-800">Список записів</h2>
+</div>
+
+<form method="get" class="flex gap-2 mb-8 bg-blue-50 p-4 rounded-lg">
+    <input type="text" name="diagnosis" 
+           placeholder="Пошук за діагнозом..." 
+           class="flex-1 px-4 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+           value="{{ current_filter|default:'' }}">
+    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+        Шукати
+    </button>
+    {% if current_filter %}
+        <a href="{% url 'appointment_list' %}" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition">
+            Скинути
+        </a>
+    {% endif %}
+</form>
+
+<div class="overflow-x-auto">
+    <table class="w-full text-left border-collapse">
+        <thead>
+            <tr class="border-b-2 border-gray-100 text-gray-400 uppercase text-xs tracking-wider">
+                <th class="pb-3">Пацієнт</th>
+                <th class="pb-3">Дата</th>
+                <th class="pb-3 text-center">Лікар</th>
+                <th class="pb-3">Діагноз</th>
+                <th class="pb-3 text-right">Дія</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+            {% for app in appointments %}
+            <tr class="hover:bg-blue-50 transition">
+                <td class="py-4 font-semibold text-gray-700">{{ app.patient_name }}</td>
+                <td class="py-4 text-gray-500 text-sm">{{ app.date }}</td>
+                <td class="py-4 text-center text-gray-600">
+                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
+                        {{ app.doctor }}
+                    </span>
+                </td>
+                <td class="py-4 italic text-gray-500">{{ app.diagnosis }}</td>
+                <td class="py-4 text-right">
+                    <a href="{% url 'appointment_detail' app.id %}" class="text-blue-600 hover:underline font-medium">
+                        Детальніше →
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="py-10 text-center text-gray-400">Записів не знайдено</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

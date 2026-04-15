@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="flex items-center gap-4 mb-6">
+        <a href="{% url 'appointment_list' %}" class="text-gray-400 hover:text-blue-600 transition">← Назад</a>
+        <h2 class="text-3xl font-bold text-gray-800">Картка прийому</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+        <div>
+            <label class="block text-xs uppercase text-gray-400 font-bold mb-1">Пацієнт</label>
+            <p class="text-lg font-semibold text-gray-800">{{ appointment.patient_name }}</p>
+        </div>
+        <div>
+            <label class="block text-xs uppercase text-gray-400 font-bold mb-1">Дата народження</label>
+            <p class="text-gray-700">{{ appointment.birth_date }}</p>
+        </div>
+        <div>
+            <label class="block text-xs uppercase text-gray-400 font-bold mb-1">Телефон</label>
+            <p class="text-blue-600 font-mono">{{ appointment.phone }}</p>
+        </div>
+        <div>
+            <label class="block text-xs uppercase text-gray-400 font-bold mb-1">Дата прийому</label>
+            <p class="text-gray-700">{{ appointment.appointment_date }}</p>
+        </div>
+        <div class="col-span-full border-t pt-4">
+            <label class="block text-xs uppercase text-gray-400 font-bold mb-1">Лікар</label>
+            <p class="text-gray-800 font-medium">{{ appointment.doctor }}</p>
+        </div>
+        <div class="col-span-full bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+            <label class="block text-xs uppercase text-blue-500 font-bold mb-2">Діагноз</label>
+            <p class="text-gray-800 text-lg leading-relaxed">{{ appointment.diagnosis }}</p>
+        </div>
+        <div class="col-span-full">
+            <label class="block text-xs uppercase text-red-400 font-bold mb-1">Скарги</label>
+            <p class="text-gray-600 italic">{{ appointment.complaints }}</p>
+        </div>
+        <div class="col-span-full bg-green-50 p-4 rounded-xl border border-green-100 text-green-800">
+            <label class="block text-xs uppercase font-bold mb-2">Призначене лікування</label>
+            <p class="leading-relaxed">{{ appointment.treatment }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
