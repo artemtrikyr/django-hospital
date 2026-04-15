@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto text-center py-12">
+    <div class="bg-white p-8 rounded-2xl shadow-xl border border-red-100">
+        <div class="w-20 h-20 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
+            🗑️
+        </div>
+        
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Ви впевнені?</h2>
+        <p class="text-gray-500 mb-8 leading-relaxed">
+            Ви збираєтеся видалити запис: <br>
+            <span class="font-bold text-gray-800 text-lg">"{{ obj }}"</span>. <br>
+            Цю дію неможливо буде скасувати.
+        </p>
+        
+        <form method="post" class="flex flex-col gap-3">
+            {% csrf_token %}
+            <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-xl font-bold hover:bg-red-700 shadow-lg shadow-red-200 transition-all active:scale-95">
+                Так, видалити назавжди
+            </button>
+            <a href="{% url back_url %}" class="w-full bg-gray-100 text-gray-600 py-3 rounded-xl font-bold hover:bg-gray-200 transition-all text-center">
+                Ні, залишити як є
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

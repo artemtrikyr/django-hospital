@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto py-8">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <h2 class="text-3xl font-bold mb-8 text-gray-800 text-center">{{ title }}</h2>
+        
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="flex flex-col">
+                    <label class="text-sm font-semibold text-gray-600 mb-2 px-1">
+                        {{ field.label }}
+                    </label>
+                    
+                    {{ field }}
+                    
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <p class="text-red-500 text-xs mt-1 px-1">⚠️ {{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    {% if field.help_text %}
+                        <p class="text-gray-400 text-xs mt-1 px-1">{{ field.help_text }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+            <div class="pt-6 flex flex-col sm:flex-row gap-4">
+                <button type="submit" class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all active:scale-95">
+                    Зберегти дані
+                </button>
+                <a href="{% url 'appointment_list' %}" class="flex-1 bg-gray-100 text-gray-600 font-bold py-3 rounded-xl hover:bg-gray-200 transition-all text-center">
+                    Скасувати
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
