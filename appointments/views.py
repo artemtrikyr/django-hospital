@@ -3,11 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Appointment
 from .forms import AppointmentForm
 
-<<<<<<< HEAD
 # 1. СПИСОК
-=======
-# 1. СПИСОК (Цього атрибута зараз не вистачає)
->>>>>>> 15ebb4350ac37d906d0ce3ad45cd333009cce21a
 def appointment_list(request):
     appointments = Appointment.objects.all()
     diagnosis_filter = request.GET.get('diagnosis')
@@ -45,10 +41,6 @@ def appointment_edit(request, id):
         form = AppointmentForm(request.POST, instance=appointment)
         if form.is_valid():
             form.save()
-<<<<<<< HEAD
-=======
-            # Повертаємо на сторінку ДЕТАЛЕЙ цієї картки
->>>>>>> 15ebb4350ac37d906d0ce3ad45cd333009cce21a
             return redirect('appointment_detail', id=appointment.id)
     else:
         form = AppointmentForm(instance=appointment)

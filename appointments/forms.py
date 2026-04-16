@@ -9,10 +9,6 @@ class AppointmentForm(forms.ModelForm):
             'appointment_date', 'doctor', 'diagnosis', 'treatment'
         ]
         
-<<<<<<< HEAD
-=======
-        # Створюємо спільний набір стилів для всіх полів
->>>>>>> 15ebb4350ac37d906d0ce3ad45cd333009cce21a
         base_attrs = {
             'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 shadow-sm bg-white'
         }
@@ -23,17 +19,13 @@ class AppointmentForm(forms.ModelForm):
             'diagnosis': forms.TextInput(attrs=base_attrs),
             'doctor': forms.Select(attrs=base_attrs),
             
-<<<<<<< HEAD
             'birth_date': forms.DateInput(attrs={**base_attrs, 'type': 'date'}),
             'appointment_date': forms.DateTimeInput(attrs={**base_attrs, 'type': 'datetime-local'}),
             
-=======
-            # Спеціальні типи полів з тими ж стилями
             'birth_date': forms.DateInput(attrs={**base_attrs, 'type': 'date'}),
             'appointment_date': forms.DateTimeInput(attrs={**base_attrs, 'type': 'datetime-local'}),
             
-            # Текстові області (complaints, treatment)
->>>>>>> 15ebb4350ac37d906d0ce3ad45cd333009cce21a
+
             'complaints': forms.Textarea(attrs={**base_attrs, 'rows': 3}),
             'treatment': forms.Textarea(attrs={**base_attrs, 'rows': 3}),
         }
