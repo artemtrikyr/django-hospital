@@ -1,9 +1,24 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Appointment
 from .forms import AppointmentForm
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import AppointmentSerializer
 
-# 1. СПИСОК
+
+@api_view(['GET'])
+def api_appointment_list(request):
+    appointments = Appointment.objects.all()
+    serializer = AppointmentSerializer(appointments, many=True)
+    return Response(serializer.data)
+
+def is_doctor(user):
+    return user.groups.filter(name='Doctors').exists() or user.is_superuser
+
+def is_admin(user):
+    return user.groups.filter(name='Admins').exists() or user.is_superuser
+
 def appointment_list(request):
     appointments = Appointment.objects.all()
     diagnosis_filter = request.GET.get('diagnosis')
@@ -16,13 +31,13 @@ def appointment_list(request):
         'current_filter': diagnosis_filter
     })
 
-# 2. ДЕТАЛІ
 def appointment_detail(request, id):
     appointment = get_object_or_404(Appointment, id=id)
+    request.session['last_viewed_id'] = appointment.id
+    request.session['last_viewed_name'] = appointment.patient_name
+    
     return render(request, 'appointments/detail.html', {'appointment': appointment})
 
-# 3. СТВОРЕННЯ
-@login_required
 def appointment_create(request):
     if request.method == "POST":
         form = AppointmentForm(request.POST)
@@ -33,8 +48,7 @@ def appointment_create(request):
         form = AppointmentForm()
     return render(request, 'appointments/form.html', {'form': form, 'title': 'Новий запис'})
 
-# 4. РЕДАГУВАННЯ
-@login_required
+@user_passes_test(is_doctor)
 def appointment_edit(request, id):
     appointment = get_object_or_404(Appointment, id=id)
     if request.method == "POST":
@@ -46,8 +60,7 @@ def appointment_edit(request, id):
         form = AppointmentForm(instance=appointment)
     return render(request, 'appointments/form.html', {'form': form, 'title': 'Редагування запису'})
 
-# 5. Видалення 
-@login_required
+@user_passes_test(is_doctor)
 def appointment_delete(request, id):
     appointment = get_object_or_404(Appointment, id=id)
     if request.method == "POST":

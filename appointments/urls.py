@@ -7,4 +7,5 @@ urlpatterns = [
     path('create/', views.appointment_create, name='appointment_create'),
     path('<int:id>/edit/', views.appointment_edit, name='appointment_edit'),
     path('<int:id>/delete/', views.appointment_delete, name='appointment_delete'),
+    path('api/list/', views.api_appointment_list, name='api_appointment_list'),
 ]
